@@ -3,17 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "parcel ./example/todo.html",
-    "build": "parcel build ./example/todo.html"
+    "start": "webpack-dev-server --env dev --mode development --open",
+    "build": "npm run build:static",
+    "build:static": "webpack --env dev --mode development"
   },
   "keywords": [],
   "author": "Matteo Mazzucchelli <mazzucchelli.wrk@gmail.com> (https://github.com/mazzucchelli)",
   "license": "ISC",
   "dependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "html-loader": "^3.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.0",
     "observable-membrane": "^2.0.0",
-    "parcel-bundler": "^1.12.5",
     "shortid": "^2.2.16",
-    "tiny-typed-emitter": "^2.1.0"
+    "tiny-typed-emitter": "^2.1.0",
+    "ts-loader": "^9.3.0",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.2"
   },
   "devDependencies": {
     "typescript": "^4.7.2"
