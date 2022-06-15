@@ -1,4 +1,4 @@
-import shortid from "shortid";
+import { nanoid } from "nanoid";
 import { ObservableMembrane } from "observable-membrane";
 import { ProxyPropertyKey } from "observable-membrane/dist/shared";
 import { convertType } from "../utils";
@@ -19,7 +19,7 @@ export class ReactiveComponent<Props> {
   public props: Props;
 
   constructor(htmlEl: HTMLElement, handler: any) {
-    this.id = shortid.generate();
+    this.id = `rh_${nanoid(6)}`;
     this.$htmlEl = htmlEl;
     this.propsMap = {};
     this.props = {} as Props;

@@ -1,8 +1,8 @@
-function unquoteKey(string: string) {
-  const count = string.length - 1;
-  const pair = string.charAt(0) + string.charAt(count);
-  return pair === '""' || pair === "''" ? string.slice(1, count) : string;
-}
+// function unquoteKey(string: string) {
+//   const count = string.length - 1;
+//   const pair = string.charAt(0) + string.charAt(count);
+//   return pair === '""' || pair === "''" ? string.slice(1, count) : string;
+// }
 
 const cleanDatasetKey = (key: string, selector: string) => {
   const cleaned = key.replace(selector, "");

@@ -1,5 +1,4 @@
 import { ReactiveComponent } from "./ReactiveComponent";
-import { ListenerSignature } from "tiny-typed-emitter";
 
 const RH_MEMORY = new Map();
 
@@ -11,14 +10,17 @@ export class ReactiveHtml {
     [key: string]: string;
   };
   private rootElement: HTMLElement;
-  private selector: any;
+  private selector: string;
+  private shouldLog: boolean;
 
   constructor({
     components,
     asyncComponents,
     rootElement = `[data-r-root]`,
     selector = `[data-r]`,
+    logs = false,
   }) {
+    this.shouldLog = logs;
     this.rootElement = document.body.querySelector(rootElement);
     this.selector = selector;
     this.components = components;
@@ -38,18 +40,22 @@ export class ReactiveHtml {
   afterNodeDeleted(removedNodes) {
     // const removed = removedNodes.querySelectorAll(this.selector);
 
-    // console.log(
-    //   `%c- [${removed.length}]`,
-    //   "color: white; background-color: #9c27b0; padding: 3px 5px;"
-    // );
-
     removedNodes
       .filter((el) => el.dataset.rId)
       .forEach((comp) => {
-        const { rId } = comp.dataset;
+        const { rId, r } = comp.dataset;
 
         if (RH_MEMORY.has(rId)) {
           const instance = RH_MEMORY.get(rId);
+
+          if (this.shouldLog) {
+            console.log(
+              `%c[${r} # ${rId}] destroyed`,
+              "color: white; background-color: #9c27b0; padding: 3px 5px;"
+            );
+            console.log(comp);
+          }
+
           instance.destroy();
           RH_MEMORY.delete(rId);
         }
@@ -93,9 +99,9 @@ export class ReactiveHtml {
   findComponents(target: HTMLElement) {
     const finalTarget =
       target !== this.rootElement ? target.parentNode : this.rootElement;
-    return Array.from(finalTarget.querySelectorAll(this.selector)).filter(
-      (el) => !!el.dataset.r && !el.dataset.rId
-    );
+    return Array.from(
+      finalTarget.querySelectorAll(this.selector) as NodeListOf<HTMLElement>
+    ).filter((el) => !!el.dataset.r && !el.dataset.rId);
   }
 
   importComponents(target: HTMLElement) {
@@ -110,26 +116,27 @@ export class ReactiveHtml {
           const shouldImport =
             this.ASYNC_COMPONENT_LIST.includes(componentName);
 
+          let instance: ReactiveComponent<unknown> = null;
+
           if (shouldImport) {
-            // import or get component handler
             const asyncRh = await import(
               `~/${this.asyncComponents[componentName]}`
             );
-
-            // init component
-            const instance = new ReactiveComponent(component, asyncRh.default);
-
-            // store component reference
-            RH_MEMORY.set(instance.id, instance);
+            instance = new ReactiveComponent(component, asyncRh.default);
           } else {
-            // import or get component handler
             const rh = this.components[componentName];
+            instance = new ReactiveComponent(component, rh);
+          }
 
-            // init component
-            const instance = new ReactiveComponent(component, rh);
+          // store component reference
+          RH_MEMORY.set(instance.id, instance);
 
-            // store component reference
-            RH_MEMORY.set(instance.id, instance);
+          if (this.shouldLog) {
+            console.log(
+              `%c[${componentName} # ${instance.id}] initiated`,
+              "color: white; background-color: #3f51b5; padding: 3px 5px;"
+            );
+            console.log(instance.$el);
           }
         });
         resolve();

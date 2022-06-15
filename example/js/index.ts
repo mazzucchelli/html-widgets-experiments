@@ -1,54 +1,17 @@
 import { ReactiveHtml } from "../../lib/helpers/componentsManager";
-// import { createEvents } from "../../lib/helpers/eventEmitter";
+import createRH from "../../lib/helpers/createComponent";
 
 import Log from "./components/Log";
-
-// interface GlobalEvents {
-//   LOGIN: () => void;
-// }
 
 new ReactiveHtml({
   components: {
     Log,
   },
-  asyncComponents: { Duplicate: `components/Duplicate.ts` },
+  asyncComponents: { Duplicate: `Duplicate.ts` },
+  logs: true,
 });
 
-interface createRHDataModel {
-  name: string;
-  className?: string;
-  template?: string;
-  tag?: string;
-  props?: { [x: string]: string };
-}
-
-const createRH = ({
-  name,
-  template,
-  tag,
-  props,
-  className,
-}: createRHDataModel) => {
-  const rootTag = document.createElement(tag || "div");
-  rootTag.dataset.r = name;
-
-  if (className) {
-    rootTag.classList.add(className);
-  }
-
-  if (template) {
-    rootTag.innerHTML = template;
-  }
-
-  if (props) {
-    for (const [key, value] of Object.entries(props)) {
-      rootTag.dataset[key] = value;
-    }
-  }
-
-  return rootTag;
-};
-
+// demo porposes only
 document.querySelector(".js_add").addEventListener("click", () => {
   const newComp = createRH({
     name: "Duplicate",

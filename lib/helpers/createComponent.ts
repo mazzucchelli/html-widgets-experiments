@@ -1,14 +1,25 @@
 interface createRHDataModel {
   name?: string;
+  className?: string;
   template?: string;
   tag?: string;
   props?: { [x: string]: string };
 }
 
-export default ({ name, template, tag, props }: createRHDataModel) => {
+export default ({
+  name,
+  template,
+  tag,
+  props,
+  className,
+}: createRHDataModel) => {
   const rootTag = document.createElement(tag || "div");
 
   if (name) rootTag.dataset.r = name;
+
+  if (className) {
+    rootTag.classList.add(className);
+  }
 
   if (template) {
     rootTag.innerHTML = template;
