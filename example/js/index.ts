@@ -1,16 +1,17 @@
 import { ReactiveHtml } from "../../lib/helpers/componentsManager";
-import { createEvents } from "../../lib/helpers/eventEmitter";
+// import { createEvents } from "../../lib/helpers/eventEmitter";
 
-import LoginForm from "./components/LoginForm";
-import TodoComponent from "./components/TodoComponent";
+import Log from "./components/Log";
 
-interface GlobalEvents {
-  LOGIN: () => void;
-}
+// interface GlobalEvents {
+//   LOGIN: () => void;
+// }
 
 new ReactiveHtml({
-  components: { LoginForm, TodoComponent },
-  events: createEvents<GlobalEvents>(),
+  components: {
+    Log,
+  },
+  asyncComponents: { Duplicate: `components/Duplicate.ts` },
 });
 
 interface createRHDataModel {

@@ -4,7 +4,6 @@ import { ProxyPropertyKey } from "observable-membrane/dist/shared";
 // import { parseDataset } from "../utils";
 import Configs from "../configs";
 import { convertType } from "../utils";
-import { ListenerSignature } from "tiny-typed-emitter";
 
 export type RC<Props, Children> = ReactiveComponent<Props, Children>;
 
@@ -22,7 +21,7 @@ export class ReactiveComponent<Props, Children> {
   public props: Props;
   public children: Children;
 
-  constructor(htmlEl: HTMLElement, handler: any, emitter: unknown) {
+  constructor(htmlEl: HTMLElement, handler: any) {
     this.id = shortid.generate();
     this.$htmlEl = htmlEl;
     this.propsMap = {};
@@ -34,7 +33,7 @@ export class ReactiveComponent<Props, Children> {
     this.collectChildren();
     this.collectProps();
 
-    const destroyFun = handler(this, emitter);
+    const destroyFun = handler(this);
     this.destroy = destroyFun ? destroyFun : () => {};
   }
 

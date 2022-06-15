@@ -1,29 +1,38 @@
 import { ReactiveComponent } from "./ReactiveComponent";
 import { ListenerSignature } from "tiny-typed-emitter";
 
-const COMPONENT_LIST = new Map();
+const RH_MEMORY = new Map();
 
 export class ReactiveHtml {
-  private components: any;
-  private events: ListenerSignature<unknown>;
-  private importer: () => Promise<any> | null;
+  private components: {
+    [key: string]: ReactiveComponent<unknown, unknown>;
+  };
+  private asyncComponents: {
+    [key: string]: string;
+  };
   private rootElement: HTMLElement;
   private selector: any;
 
   constructor({
     components,
-    events,
-    importer = null,
+    asyncComponents,
     rootElement = `[data-r-root]`,
     selector = `[data-r]`,
   }) {
     this.rootElement = document.body.querySelector(rootElement);
     this.selector = selector;
     this.components = components;
-    this.importer = importer;
-    this.events = events;
+    this.asyncComponents = asyncComponents;
 
     this.init();
+  }
+
+  get COMPONENT_LIST() {
+    return Object.keys(this.components);
+  }
+
+  get ASYNC_COMPONENT_LIST() {
+    return Object.keys(this.asyncComponents);
   }
 
   afterNodeDeleted(removedNodes) {
@@ -39,10 +48,10 @@ export class ReactiveHtml {
       .forEach((comp) => {
         const { rId } = comp.dataset;
 
-        if (COMPONENT_LIST.has(rId)) {
-          const instance = COMPONENT_LIST.get(rId);
+        if (RH_MEMORY.has(rId)) {
+          const instance = RH_MEMORY.get(rId);
           instance.destroy();
-          COMPONENT_LIST.delete(rId);
+          RH_MEMORY.delete(rId);
         }
       });
   }
@@ -93,14 +102,35 @@ export class ReactiveHtml {
     return new Promise<void>((resolve, reject) => {
       try {
         const components = this.findComponents(target);
+
         components.forEach(async (component) => {
           const componentName = component.dataset.r;
-          const rh = await import(
-            `~/example/js/components/${componentName}.ts` // TODO from configs
-          );
 
-          const c = new ReactiveComponent(component, rh.default, this.events);
-          COMPONENT_LIST.set(c.id, c);
+          // if component is typeof string is considered a path to lazy import
+          const shouldImport =
+            this.ASYNC_COMPONENT_LIST.includes(componentName);
+
+          if (shouldImport) {
+            // import or get component handler
+            const asyncRh = await import(
+              `~/${this.asyncComponents[componentName]}`
+            );
+
+            // init component
+            const instance = new ReactiveComponent(component, asyncRh.default);
+
+            // store component reference
+            RH_MEMORY.set(instance.id, instance);
+          } else {
+            // import or get component handler
+            const rh = this.components[componentName];
+
+            // init component
+            const instance = new ReactiveComponent(component, rh);
+
+            // store component reference
+            RH_MEMORY.set(instance.id, instance);
+          }
         });
         resolve();
       } catch (e) {

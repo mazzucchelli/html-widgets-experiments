@@ -6,9 +6,9 @@ interface CounterChildren {
 
 export default (ctx: RC<{}, CounterChildren>) => {
   const { $el, children } = ctx;
-  const { close } = children;
+  // const { close } = children;
 
-  close.addEventListener("click", () => {
+  $el.addEventListener("click", () => {
     $el.remove();
   });
 };
