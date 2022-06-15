@@ -1,0 +1,21 @@
+{
+  "name": "reactive-html",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "parcel ./example/todo.html",
+    "build": "parcel build ./example/todo.html"
+  },
+  "keywords": [],
+  "author": "Matteo Mazzucchelli <mazzucchelli.wrk@gmail.com> (https://github.com/mazzucchelli)",
+  "license": "ISC",
+  "dependencies": {
+    "observable-membrane": "^2.0.0",
+    "parcel-bundler": "^1.12.5",
+    "shortid": "^2.2.16",
+    "tiny-typed-emitter": "^2.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.2"
+  }
+}
