@@ -5,7 +5,7 @@ const RH_MEMORY = new Map();
 
 export class ReactiveHtml {
   private components: {
-    [key: string]: ReactiveComponent<unknown, unknown>;
+    [key: string]: ReactiveComponent<unknown>;
   };
   private asyncComponents: {
     [key: string]: string;

@@ -33,9 +33,9 @@ interface CounterChildren {
   value: HTMLDivElement;
 }
 
-export default (ctx: RC<CounterProps, CounterChildren>) => {
-  const { $el, children, props, useState } = ctx;
-  const { increment, value } = children;
+export default (ctx: RC<CounterProps>) => {
+  const { $el, props, useState } = ctx;
+  const value = $el.querySelector(".js_value") as HTMLDivElement;
   const { delta } = props;
 
   const count_$ = useState({ value: 0 }, () => {

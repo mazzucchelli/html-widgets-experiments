@@ -1,11 +1,7 @@
 import { RC } from "../../../lib/helpers/ReactiveComponent";
 
-interface CounterChildren {
-  close: HTMLButtonElement;
-}
-
-export default (ctx: RC<{}, CounterChildren>) => {
-  const { $el, children } = ctx;
+export default (ctx: RC<{}>) => {
+  const { $el } = ctx;
   // const { close } = children;
 
   $el.addEventListener("click", () => {
