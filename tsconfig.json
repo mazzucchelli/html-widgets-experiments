@@ -13,7 +13,8 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "declaration": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "module": "esNext",
   },
   "exclude": [
     "node_modules"

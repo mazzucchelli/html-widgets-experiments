@@ -81,13 +81,13 @@ export class ReactiveHtml {
     return new Promise<void>((resolve, reject) => {
       try {
         const components = this.findComponents(target);
-        components.forEach((component) => {
+        components.forEach(async (component) => {
           const componentName = component.dataset.r;
-          new ReactiveComponent(
-            component,
-            this.components[componentName],
-            this.events
+          const rh = await import(
+            `~/example/js/components/${componentName}.ts`
           );
+          console.log("!! imported", componentName);
+          new ReactiveComponent(component, rh.default, this.events);
         });
         resolve();
       } catch (e) {

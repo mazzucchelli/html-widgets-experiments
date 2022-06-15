@@ -52,7 +52,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
     alias: {
-      RH: path.resolve(__dirname, "example/js/components"),
+      "~": path.resolve(__dirname, "."),
     },
   },
   devServer: {

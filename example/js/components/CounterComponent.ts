@@ -42,18 +42,18 @@ export default (ctx: RC<CounterProps, CounterChildren>) => {
     value.innerText = `${count_$.value}`;
   });
 
-  increment.addEventListener("click", () => {
-    count_$.value += delta;
+  // increment.addEventListener("click", () => {
+  //   count_$.value += delta;
 
-    const logComponent = createRH({
-      name: "Log",
-      props: { something: "yo" },
-      template: `
-        <span>${delta} added to counter</span>
-        <button data-x-target="close">close</button>
-      `,
-    });
+  //   const logComponent = createRH({
+  //     name: "Log",
+  //     props: { something: "yo" },
+  //     template: `
+  //       <span>${delta} added to counter</span>
+  //       <button data-x-target="close">close</button>
+  //     `,
+  //   });
 
-    $el.appendChild(logComponent);
-  });
+  //   $el.appendChild(logComponent);
+  // });
 };

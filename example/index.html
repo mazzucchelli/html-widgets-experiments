@@ -4,11 +4,19 @@
     <title>Parcel Sandbox</title>
     <meta charset="UTF-8" />
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      .dup {
+        background: tomato;
+        width: 30px;
+        height: 30px;
+      }
+    </style>
   </head>
 
   <body>
     <div data-r-root>
-      <div data-r="TodoComponent" class="container mx-auto px-4 h-screen">
+      <!-- <div data-r="TodoComponent" class="container mx-auto px-4 h-screen">
         <div class="flex justify-center items-center">
           <input
             r-child="todoInput"
@@ -19,6 +27,8 @@
         <div r-child="todoList"></div>
         <div r-child="doneList"></div>
       </div>
+      <div data-r="CounterComponent"></div> -->
+      <button class="btn js_add">add</button>
     </div>
     <script src="js/index.ts"></script>
   </body>
