@@ -1,11 +1,13 @@
 import { ReactiveComponent } from "./ReactiveComponent";
 import { ListenerSignature } from "tiny-typed-emitter";
 
+const COMPONENT_LIST = new Map();
+
 export class ReactiveHtml {
   private components: any;
   private events: ListenerSignature<unknown>;
   private importer: () => Promise<any> | null;
-  private rootElement: any;
+  private rootElement: HTMLElement;
   private selector: any;
 
   constructor({
@@ -25,7 +27,24 @@ export class ReactiveHtml {
   }
 
   afterNodeDeleted(removedNodes) {
-    console.log("afterNodeDeleted", removedNodes);
+    // const removed = removedNodes.querySelectorAll(this.selector);
+
+    // console.log(
+    //   `%c- [${removed.length}]`,
+    //   "color: white; background-color: #9c27b0; padding: 3px 5px;"
+    // );
+
+    removedNodes
+      .filter((el) => el.dataset.rId)
+      .forEach((comp) => {
+        const { rId } = comp.dataset;
+
+        if (COMPONENT_LIST.has(rId)) {
+          const instance = COMPONENT_LIST.get(rId);
+          instance.destroy();
+          COMPONENT_LIST.delete(rId);
+        }
+      });
   }
 
   afterNodeAdded(addedNodes: HTMLElement[]) {
@@ -37,41 +56,34 @@ export class ReactiveHtml {
   }
 
   async observeDomChanges(target: HTMLElement) {
-    const config = { attributes: true, childList: true, subtree: true };
     const observer = new MutationObserver((mutationsList) => {
       for (let mutation of mutationsList) {
-        if (mutation.type === "childList") {
-          const addedNodes = Array.from(mutation.addedNodes);
-          const removedNodes = Array.from(mutation.removedNodes);
+        // handle only added and removed nodes
+        if (mutation.type !== "childList") return;
 
-          if (mutation.target && removedNodes.length) {
-            this.afterNodeDeleted(removedNodes);
-          }
+        const addedNodes = Array.from(mutation.addedNodes);
+        const removedNodes = Array.from(mutation.removedNodes);
 
-          if (mutation.target && addedNodes.length) {
-            this.afterNodeAdded(addedNodes as HTMLElement[]);
-          }
-        } else {
-          return;
-          //   if (
-          //     mutation.attributeName.includes("data-state") &&
-          //     !!mutation.target.CID
-          //   ) {
-          //     this.afterStateAttributeChanged(
-          //       mutation.target.CID,
-          //       mutation.attributeName
-          //     );
-          //   }
+        if (mutation.target && removedNodes.length) {
+          this.afterNodeDeleted(removedNodes);
+        }
+
+        if (mutation.target && addedNodes.length) {
+          this.afterNodeAdded(addedNodes as HTMLElement[]);
         }
       }
     });
 
-    observer.observe(target, config);
+    observer.observe(target, {
+      attributes: false,
+      childList: true,
+      subtree: true,
+    });
   }
 
   findComponents(target: HTMLElement) {
     const finalTarget =
-      target !== document.body ? target.parentNode : document.body;
+      target !== this.rootElement ? target.parentNode : this.rootElement;
     return Array.from(finalTarget.querySelectorAll(this.selector)).filter(
       (el) => !!el.dataset.r && !el.dataset.rId
     );
@@ -84,10 +96,11 @@ export class ReactiveHtml {
         components.forEach(async (component) => {
           const componentName = component.dataset.r;
           const rh = await import(
-            `~/example/js/components/${componentName}.ts`
+            `~/example/js/components/${componentName}.ts` // TODO from configs
           );
-          console.log("!! imported", componentName);
-          new ReactiveComponent(component, rh.default, this.events);
+
+          const c = new ReactiveComponent(component, rh.default, this.events);
+          COMPONENT_LIST.set(c.id, c);
         });
         resolve();
       } catch (e) {
@@ -98,11 +111,10 @@ export class ReactiveHtml {
 
   async init() {
     try {
-      const res = await this.importComponents(this.rootElement);
+      await this.importComponents(this.rootElement);
       await this.observeDomChanges(this.rootElement);
-      console.log(res);
     } catch (e) {
-      console.error(e);
+      console.error("RH-ERR", e);
     }
   }
 }

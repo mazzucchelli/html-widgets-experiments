@@ -14,10 +14,11 @@ const snakeToCamel = (str: string) =>
   );
 
 export class ReactiveComponent<Props, Children> {
-  private id: string;
   private $htmlEl: HTMLElement;
   private propsMap: { [key: string]: string };
 
+  public destroy: () => void;
+  public id: string;
   public props: Props;
   public children: Children;
 
@@ -32,7 +33,9 @@ export class ReactiveComponent<Props, Children> {
 
     this.collectChildren();
     this.collectProps();
-    handler(this, emitter);
+
+    const destroyFun = handler(this, emitter);
+    this.destroy = destroyFun ? destroyFun : () => {};
   }
 
   get $el() {
