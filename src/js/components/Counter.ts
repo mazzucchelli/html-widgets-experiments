@@ -22,9 +22,10 @@ const Counter: WidgetFunction<CounterProps> = (ctx, helpers) => {
 
   const notify = (msg: string) => {
     const Message = createWidget({
-      name: "Message",
+      name: "Notification",
       props: {
         msg,
+        type: "info",
       },
     });
     document.querySelector("[data-widgets-root]").appendChild(Message);

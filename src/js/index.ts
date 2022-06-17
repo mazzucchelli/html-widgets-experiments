@@ -1,5 +1,6 @@
 import HtmlWidgets from "html-widgets";
 import plugins from "./widgetHelpers";
+import "../css/styles.css";
 
 import Message from "./components/Message";
 

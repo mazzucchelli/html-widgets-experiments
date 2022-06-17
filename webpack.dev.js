@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
-    main: `${path.resolve(__dirname, "example/js")}/index.ts`,
+    main: `${path.resolve(__dirname, "src/js")}/index.ts`,
   },
   // devtool: "inline-source-map",
   // stats: "minimal",
@@ -18,25 +18,8 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(sass|scss|css)$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: "css-loader",
-            options: {
-              modules: false,
-              sourceMap: true,
-            },
-          },
-          {
-            loader: "sass-loader",
-            options: {
-              sourceMap: true,
-            },
-          },
-        ],
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
         test: /\.html$/,
@@ -52,7 +35,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
     alias: {
-      "~": path.resolve(__dirname, "./example/js/components"),
+      "~": path.resolve(__dirname, "./src/js/components"),
     },
   },
   devServer: {
@@ -72,7 +55,7 @@ module.exports = {
       filename: "style.css",
     }),
     new HtmlWebPackPlugin({
-      template: "./example/index.html",
+      template: "./src/index.html",
       filename: "./index.html",
     }),
   ],
