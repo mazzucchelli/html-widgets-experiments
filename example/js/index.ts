@@ -1,22 +1,13 @@
-import { ReactiveHtml } from "../../lib/helpers/componentsManager";
-import createRH from "../../lib/helpers/createComponent";
+import HtmlWidgets from "html-widgets";
+import plugins from "./widgetHelpers";
 
-import Log from "./components/Log";
+import Message from "./components/Message";
 
-new ReactiveHtml({
-  components: {
-    Log,
-  },
-  asyncComponents: { Duplicate: `Duplicate.ts` },
+new HtmlWidgets({
+  lazyImport: async (widget) => await import(`~/${widget}`),
   logs: true,
-});
-
-// demo porposes only
-document.querySelector(".js_add").addEventListener("click", () => {
-  const newComp = createRH({
-    name: "Duplicate",
-    className: "dup",
-  });
-
-  document.querySelector("[data-r-root]").appendChild(newComp);
+  plugins,
+  widgets: {
+    Message,
+  },
 });
