@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "webpack-dev-server --env dev --mode development --open",
-    "build": "webpack --env dev --mode production"
+    "build": "NODE_ENV=production webpack --env dev --mode production"
   },
   "keywords": [],
   "author": "Matteo Mazzucchelli <mazzucchelli.wrk@gmail.com> (https://github.com/mazzucchelli)",
@@ -17,6 +17,7 @@
     "html-widgets": "1.1.0-beta.1",
     "mini-css-extract-plugin": "^2.6.0",
     "observable-membrane": "^2.0.0",
+    "tiny-typed-emitter": "^2.1.0",
     "ts-loader": "^9.3.0",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
