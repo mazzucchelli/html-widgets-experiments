@@ -1,3 +1,4 @@
+// import { WidgetFunction as BaseWidgetFunction } from "../../lib/dist/html-widgets.cjs";
 import { WidgetFunction as BaseWidgetFunction } from "html-widgets";
 import helpers from "./widgetHelpers";
 

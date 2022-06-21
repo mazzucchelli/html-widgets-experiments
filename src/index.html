@@ -3,25 +3,228 @@
   <head>
     <title>HTML Widgets Docs</title>
     <meta charset="UTF-8" />
-    <!-- <link rel="stylesheet" href="css/styles.css" /> -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
 
   <body>
     <main data-widgets-root>
       <div data-widget="NotificationManager"></div>
-      <section class="intro flex h-screen justify-center items-center">
-        Mario say welcome
-        <button
-          class="btn"
-          data-widget="NotificationTrigger"
-          :type="info"
-          :msg="lorem ipsum dolor sit amet"
-        >
-          Notify
-        </button>
+      <section class="flex h-screen w-full justify-center items-center">
+        <!-- MENU start -->
+        <div class="w-[400px] shrink h-full">
+          <div class="flex flex-col h-full justify-between px-9 py-12">
+            <div class="top">
+              <div class="text-2xl font-bold tracking-[0.5px]">Dashboard</div>
+              <nav class="menu">
+                <div>
+                  <span class="uppercase">main menu</span>
+                  <ul>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Dashboard</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Recruitment</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Payroll</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Employee Data</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Checklist</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Attendance</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Document</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <hr class="my-4" />
+                <div>
+                  <span class="uppercase">Support</span>
+                  <ul>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Setting</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Help</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <span>
+                          <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>Sign Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+            <div class="bottom">
+              <div class="user-card-avatar flex bg-gray-100 p-2 rounded-[40px]">
+                <div class="shrink">
+                  <div class="rounded-full border-2 border-blue-600 p-[2px]">
+                    <img
+                      src="https://picsum.photos/48/48"
+                      class="rounded-full"
+                      alt="avatar"
+                    />
+                  </div>
+                </div>
+                <div class="flex-1 pl-4 flex flex-col justify-center">
+                  <div>John Doe</div>
+                  <div>Admin</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- MENU end -->
+
+        <!-- MAIN CONTENT start -->
+        <div class="grow bg-gray-100 h-full px-10 py-5">
+          <div
+            class="flex justify-between border-b border-b-gray-200 pb-4 mb-4"
+          >
+            <!-- HEAD LEFT start  -->
+            <div class="shrink">
+              <button
+                class="
+                  flex
+                  justify-between
+                  search-field
+                  w-[350px]
+                  bg-white
+                  p-2
+                  rounded-lg
+                "
+              >
+                <span>Search</span>
+                <div>
+                  <i class="fa-solid fa-search"></i>
+                </div>
+              </button>
+            </div>
+            <!-- HEAD LEFT end -->
+            <!-- HEAD RIGHT start -->
+            <div class="flex items-center">
+              <div class="shrink">
+                <div class="date-badge bg-white rounded-full p-4">
+                  August 8th 2022 . 09:00 AM
+                </div>
+              </div>
+              <div class="shrink ml-4">
+                <div class="notification-menu bg-white rounded-full p-4">
+                  <i class="fa-solid fa-search"></i>
+                </div>
+              </div>
+            </div>
+            <!-- HEAD RIGHT end -->
+          </div>
+
+          <!-- BODY start -->
+
+          <div class="flex gap-x-10 items-stretch">
+            <div class="w-7/12">
+              <div class="welcome">
+                <p>Welcome, John Doe</p>
+                <p>Here is some important information for you:</p>
+              </div>
+              <div class="dashboard-card mt-5">
+                <p>Welcome, John Doe</p>
+                <p>Here is some important information for you:</p>
+              </div>
+            </div>
+            <div class="w-5/12">
+              <div class="dashboard-card h-full">schedule</div>
+            </div>
+          </div>
+
+          <div class="flex gap-x-10 mt-10">
+            <div class="w-7/12">
+              <div class="dashboard-card">
+                <p>Welcome, John Doe</p>
+                <p>Here is some important information for you:</p>
+              </div>
+            </div>
+            <div class="w-5/12">
+              <div class="dashboard-card">schedule</div>
+            </div>
+          </div>
+
+          <!-- BODY end -->
+        </div>
+        <!-- MAIN CONTENT end -->
       </section>
 
-      <div
+      <button
+        class="btn"
+        data-widget="NotificationTrigger"
+        :type="success"
+        :msg="lorem ipsum dolor sit amet"
+      >
+        Notify
+      </button>
+
+      <div data-widget="Observable" :name="asd" :age="1"></div>
+
+      <!-- <div
         data-widget="PropsInspector"
         :string="lorem ipsum"
         :number="123"
@@ -30,13 +233,25 @@
         :array="[1,2,3]"
       >
         <span>Widget with converted props</span>
-      </div>
+      </div> -->
 
       <div class="bg-grey-lighter min-h-screen flex flex-col">
         <div
-          class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2"
+          class="
+            container
+            max-w-sm
+            mx-auto
+            flex-1 flex flex-col
+            items-center
+            justify-center
+            px-2
+          "
         >
-          <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+          <form
+            data-widget="SignUpForm"
+            :initial-values="{'fullname':'marione bello','email':'','password':'','confirm_password':''} "
+            class="bg-white px-6 py-8 rounded shadow-md text-black w-full"
+          >
             <h1 class="mb-8 text-3xl text-center">Sign up</h1>
             <input
               type="text"
@@ -67,7 +282,17 @@
 
             <button
               type="submit"
-              class="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+              class="
+                w-full
+                text-center
+                py-3
+                rounded
+                bg-green
+                text-white
+                hover:bg-green-dark
+                focus:outline-none
+                my-1
+              "
             >
               Create Account
             </button>
@@ -88,7 +313,7 @@
                 Privacy Policy
               </a>
             </div>
-          </div>
+          </form>
 
           <div class="text-grey-dark mt-6">
             Already have an account?
@@ -102,7 +327,7 @@
         </div>
       </div>
 
-      <button data-widget="Nuke">Nuke</button>
+      <!-- <button data-widget="Nuke">Nuke</button> -->
     </main>
   </body>
 </html>

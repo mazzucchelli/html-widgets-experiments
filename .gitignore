@@ -25,3 +25,5 @@ node_modules/
 .vscode
 dist
 build
+src/css/style.css
+.bak

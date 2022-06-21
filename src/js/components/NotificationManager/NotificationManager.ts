@@ -1,5 +1,6 @@
-import { WidgetFunction } from "../../types";
+// import { createWidget } from "../../../../lib/dist/html-widgets.cjs";
 import { createWidget } from "html-widgets";
+import { WidgetFunction } from "../../types";
 
 const Notification: WidgetFunction<{}> = ({ $el }, { useEmitter }) => {
   const emitter = useEmitter();

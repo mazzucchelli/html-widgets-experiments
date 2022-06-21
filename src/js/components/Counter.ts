@@ -1,3 +1,4 @@
+// import { createWidget } from "../../../lib/dist/html-widgets.cjs";
 import { createWidget } from "html-widgets";
 import { WidgetFunction } from "../types";
 

@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { NotificationType, WidgetFunction } from "../../types";
 
 interface Props {
@@ -7,9 +8,17 @@ interface Props {
 
 const NotificationTrigger: WidgetFunction<Props> = (
   { $el, props },
-  { useEmitter }
+  { useEmitter, validateProps }
 ) => {
   const { type, msg } = props;
+
+  validateProps(props, () => {
+    return z.object({
+      type: z.enum(["error", "warning", "info", "success"]),
+      msg: z.string(),
+    });
+  });
+
   const emitter = useEmitter();
 
   $el.addEventListener("click", () => emitter.emit("notify", type, msg));

@@ -1,5 +1,7 @@
-import { NotificationType, WidgetFunction } from "../../types";
 import anime from "animejs/lib/anime.es.js";
+import { z } from "zod";
+
+import { NotificationType, WidgetFunction } from "../../types";
 
 interface Props {
   type: NotificationType;
@@ -8,31 +10,23 @@ interface Props {
   hideIcon?: boolean;
 }
 
+const PropsSchema = z.object({
+  type: z.enum(["error", "warning", "info", "success"]),
+  autoClose: z.optional(z.boolean()),
+  hideClose: z.optional(z.boolean()),
+  hideIcon: z.optional(z.boolean()),
+});
+
 interface TemplateData extends Props {
   content: string;
 }
 
-const notificationTemplate = (props: TemplateData) => `
-  <div class="flex">
-    ${!props.hideIcon ? `<div class="shrink">i</div>` : ""}
-    <div>${props.content}</div>
-    <div class="shrink">
-      ${
-        !props.hideClose
-          ? `<button class="js_close-btn btn">&times;</button>`
-          : ""
-      }
-      ${
-        !props.autoClose
-          ? `<div class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>`
-          : ""
-      }
-    </div>
-  </div>
-`;
-
-const Notification: WidgetFunction<Props> = ({ $el, props }, { qs }) => {
+const Notification: WidgetFunction<Props> = (
+  { $el, props },
+  { qs, validateProps }
+) => {
   const { type, autoClose, hideClose } = props;
+  validateProps(props, () => PropsSchema);
 
   const typeClass = {
     info: "notification--info",
@@ -83,5 +77,24 @@ const Notification: WidgetFunction<Props> = ({ $el, props }, { qs }) => {
 
   showAnimation(autoClose ? closeAnimation : undefined);
 };
+
+const notificationTemplate = (props: TemplateData) => `
+  <div class="flex">
+    ${!props.hideIcon ? `<div class="shrink">i</div>` : ""}
+    <div>${props.content}</div>
+    <div class="shrink">
+      ${
+        !props.hideClose
+          ? `<button class="js_close-btn btn">&times;</button>`
+          : ""
+      }
+      ${
+        !props.autoClose
+          ? `<div class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>`
+          : ""
+      }
+    </div>
+  </div>
+`;
 
 export default Notification;
