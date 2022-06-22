@@ -13,7 +13,7 @@ interface Props {
 
 const SignUpForm: WidgetFunction<Props> = (
   { $el, props },
-  { validateProps, useState }
+  { validateProps }
 ) => {
   validateProps(props, () => {
     return z.object({
@@ -67,6 +67,7 @@ const SignUpForm: WidgetFunction<Props> = (
       $el
         .querySelector(`[name="${issue.path[0]}"]`)
         .classList.add("border", "border-red-300");
+      $el.setAttribute(":error", issue.message);
     });
   };
 

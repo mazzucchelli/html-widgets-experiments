@@ -253,32 +253,40 @@
             class="bg-white px-6 py-8 rounded shadow-md text-black w-full"
           >
             <h1 class="mb-8 text-3xl text-center">Sign up</h1>
-            <input
-              type="text"
-              class="block border border-grey-light w-full p-3 rounded mb-4"
-              name="fullname"
-              placeholder="Full Name"
-            />
+            <div data-widget="InputField" :touched="false" :error="_">
+              <input
+                type="text"
+                class="block border border-grey-light w-full p-3 rounded mb-4"
+                name="fullname"
+                placeholder="Full Name"
+              />
+            </div>
 
-            <input
-              type="text"
-              class="block border border-grey-light w-full p-3 rounded mb-4"
-              name="email"
-              placeholder="Email"
-            />
+            <div data-widget="InputField" :touched="false" :error="_">
+              <input
+                type="text"
+                class="block border border-grey-light w-full p-3 rounded mb-4"
+                name="email"
+                placeholder="Email"
+              />
+            </div>
 
-            <input
-              type="password"
-              class="block border border-grey-light w-full p-3 rounded mb-4"
-              name="password"
-              placeholder="Password"
-            />
-            <input
-              type="password"
-              class="block border border-grey-light w-full p-3 rounded mb-4"
-              name="confirm_password"
-              placeholder="Confirm Password"
-            />
+            <div data-widget="InputField" :touched="false" :error="_">
+              <input
+                type="password"
+                class="block border border-grey-light w-full p-3 rounded mb-4"
+                name="password"
+                placeholder="Password"
+              />
+            </div>
+            <div data-widget="InputField" :touched="false" :error="_">
+              <input
+                type="password"
+                class="block border border-grey-light w-full p-3 rounded mb-4"
+                name="confirm_password"
+                placeholder="Confirm Password"
+              />
+            </div>
 
             <button
               type="submit"

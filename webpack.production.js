@@ -40,7 +40,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
     alias: {
-      "~": path.resolve(__dirname, "./src/js/components"),
+      "~": path.resolve(__dirname, "./src/js/widgets"),
     },
   },
   devServer: {
