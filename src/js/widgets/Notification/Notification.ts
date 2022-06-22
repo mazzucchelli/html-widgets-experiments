@@ -79,7 +79,7 @@ const Notification: WidgetFunction<Props> = (
 };
 
 const notificationTemplate = (props: TemplateData) => `
-  <div class="flex">
+  <div class="">
     ${!props.hideIcon ? `<div class="shrink">i</div>` : ""}
     <div>${props.content}</div>
     <div class="shrink">
